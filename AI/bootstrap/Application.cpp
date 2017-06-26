@@ -74,6 +74,7 @@ void Application::run(const char* title, int width, int height, bool fullscreen)
 	// start game loop if successfully initialised
 	if (createWindow(title,width,height, fullscreen) &&
 		startup()) {
+		
 
 		// variables for timing
 		double prevTime = glfwGetTime();

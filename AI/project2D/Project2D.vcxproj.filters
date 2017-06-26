@@ -66,6 +66,12 @@
     <ClCompile Include="IdleState.cpp">
       <Filter>Source Files\StateManager\States</Filter>
     </ClCompile>
+    <ClCompile Include="FleeState.cpp">
+      <Filter>Source Files\StateManager\States</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderState.cpp">
+      <Filter>Source Files\StateManager\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application2D.h">
@@ -80,9 +86,6 @@
     <ClInclude Include="KeyboardController.h">
       <Filter>Header Files\Behaviours</Filter>
     </ClInclude>
-    <ClInclude Include="FollowMouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="State.h">
       <Filter>Header Files\Statemanager</Filter>
     </ClInclude>
@@ -93,6 +96,15 @@
       <Filter>Header Files\Statemanager\States</Filter>
     </ClInclude>
     <ClInclude Include="IdleState.h">
+      <Filter>Header Files\Statemanager\States</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowMouse.h">
+      <Filter>Header Files\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="FleeState.h">
+      <Filter>Header Files\Statemanager\States</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderState.h">
       <Filter>Header Files\Statemanager\States</Filter>
     </ClInclude>
   </ItemGroup>

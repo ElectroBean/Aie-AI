@@ -21,26 +21,26 @@ void FollowMouse::Update(float a_dt, Agent * a_agent)
 
 	if (mousex > a_agent->position.x)
 	{
-		a_agent->AddForce(glm::vec2(moveSpeed, 0.0f));
+		a_agent->AddForce(Vector2(moveSpeed, 0.0f));
 	}
 	else if (mousex < a_agent->position.x)
 	{
-		a_agent->AddForce(glm::vec2((0 - moveSpeed), 0.0f));
+		a_agent->AddForce(Vector2((0 - moveSpeed), 0.0f));
 	}
 	else {}
 
 	if (mousey > a_agent->position.y)
 	{
-		a_agent->AddForce(glm::vec2(0,  moveSpeed));
+		a_agent->AddForce(Vector2(0,  moveSpeed));
 	}
 	else if (mousey < a_agent->position.y)
 	{
-		a_agent->AddForce(glm::vec2(0, (0 -moveSpeed)));
+		a_agent->AddForce(Vector2(0, (0 -moveSpeed)));
 	}
 	else {}
 
 	if (a_agent->position.x == mousex && a_agent->position.y == mousey)
 	{
-		a_agent->AddForce(glm::vec2(0, 0));
+		a_agent->AddForce(Vector2(0, 0));
 	}
 }

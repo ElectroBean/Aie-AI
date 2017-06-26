@@ -2,7 +2,7 @@
 #include "IdleState.h"
 
 
-SeekState::SeekState(glm::vec2* target, float maxSpeed)
+SeekState::SeekState(Vector2* target, float maxSpeed)
 {
 	this->target = target;
 	this->maxSpeed = maxSpeed;
@@ -25,12 +25,13 @@ void SeekState::onExit(Agent * agent)
 
 void SeekState::update(float deltaTime, Agent * agent, StateManager * sm)
 {
-	glm::vec2 dir = *target - agent->position;
-	dir = glm::normalize(dir);
-	dir *= maxSpeed;
+	Vector2 dir = *target - agent->position;
+	dir.normalise();
+	dir = dir * maxSpeed;
 
 	agent->velocity = dir;
 
-	if (glm::distance(agent->position, *target) > 250.0f)
+	if (Vector2::distance(agent->position, *target) > 250.0f)
+		//change states if the distance between agent and target is above 250 units
 		sm->changeState(agent, new IdleState(target, maxSpeed));
 }

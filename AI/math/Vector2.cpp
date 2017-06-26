@@ -110,6 +110,14 @@ float Vector2::dot(const Vector2 & a_second)
 	return (x * a_second.x + y * a_second.y);
 }
 
+float Vector2::distance(Vector2 a_1, Vector2 a_2)
+{
+	Vector2 diff = a_1 - a_2;
+	float distance = sqrtf(diff.dot(diff));
+
+	return distance;
+}
+
 Vector2::operator float*()
 {
 	return data;

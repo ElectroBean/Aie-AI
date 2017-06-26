@@ -2,6 +2,7 @@
 #include <glm\glm.hpp>
 #include <iostream>
 #include <vector>
+#include <vector2.h>
 
 class IBehaviour;
 
@@ -9,17 +10,21 @@ class Agent
 {
 public:
 	Agent();
-	Agent(glm::vec2 position);
+	Agent(Vector2 position);
 	~Agent();
 
-	void AddForce(glm::vec2 a_force);
+	void AddForce(Vector2 a_force);
 	void update(float deltaTime);
 	void AddBehaviours(IBehaviour* behaviour);
 
-	glm::vec2 position;
-	glm::vec2 acceleration;
-	glm::vec2 velocity;
+	Vector2 position;
+	Vector2 acceleration;
+	Vector2 velocity;
 
 	std::vector<IBehaviour*> behaviours;
+
+private:
+
+	float MaxVelocity;
 };
 

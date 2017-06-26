@@ -1,12 +1,13 @@
 #include "Agent.h"
 #include "IBehaviour.h"
-
+#include <random>
 
 Agent::Agent()
 {
+	
 }
 
-Agent::Agent(glm::vec2 position)
+Agent::Agent(Vector2 position)
 {
 	this->position = position;
 }
@@ -16,9 +17,9 @@ Agent::~Agent()
 {
 }
 
-void Agent::AddForce(glm::vec2 a_force)
+void Agent::AddForce(Vector2 a_force)
 {
-	acceleration += a_force;
+	acceleration = acceleration + a_force;
 }
 
 void Agent::update(float deltaTime)
@@ -29,11 +30,10 @@ void Agent::update(float deltaTime)
 	}
 
 	AddForce(velocity * -1.0f);
-	position += velocity * deltaTime;
-	velocity += acceleration * deltaTime;
+	position = position + velocity * deltaTime;
+	velocity = velocity + acceleration * deltaTime;
 
-	acceleration = glm::vec2(0, 0);
-
+	acceleration = Vector2(0, 0);
 }
 
 void Agent::AddBehaviours(IBehaviour * behaviour)

@@ -25,6 +25,7 @@ public:
 	void setRotateRad(float a_angle);			//set rotation in radians
 	void setRotateDeg(float a_angle);			//set rotation in degrees
 	float dot(const Vector2& a_second);
+	static float distance(Vector2 a_1, Vector2 a_2);
 
 	explicit operator float*();
 

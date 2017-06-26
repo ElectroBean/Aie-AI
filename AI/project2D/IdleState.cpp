@@ -1,8 +1,8 @@
 #include "IdleState.h"
 #include "SeekState.h"
+#include "FleeState.h"
 
-
-IdleState::IdleState(glm::vec2* target, float maxSpeed)
+IdleState::IdleState(Vector2* target, float maxSpeed)
 {
 	this->target = target;
 	this->maxSpeed = maxSpeed;
@@ -28,7 +28,7 @@ void IdleState::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		if (agent->position.y >= 720 - 32)
 		{
-			agent->AddForce(glm::vec2(-100, 0));
+			agent->AddForce(Vector2(-100, 0));
 		}
 
 	}
@@ -37,7 +37,7 @@ void IdleState::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		if (agent->position.y <= 0 + 32)
 		{
-			agent->AddForce(glm::vec2(100, 0));
+			agent->AddForce(Vector2(100, 0));
 		}
 
 	}
@@ -47,7 +47,7 @@ void IdleState::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		if (agent->position.x <= 0 + 32)
 		{
-			agent->AddForce(glm::vec2(0, -100));
+			agent->AddForce(Vector2(0, -100));
 		}
 
 	}
@@ -55,7 +55,7 @@ void IdleState::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		if (agent->position.x >= 1280 - 32)
 		{
-			agent->AddForce(glm::vec2(0, 100));
+			agent->AddForce(Vector2(0, 100));
 		}
 
 	}
@@ -65,14 +65,12 @@ void IdleState::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		directionX = true;
 		directionY = false;
-		std::cout << "change direction" << std::endl;
 	}
 
 	if ((agent->position.x >= (1280 - 32)) && agent->position.y <= 0 + 32)
 	{
 		directionX = false;
 		directionY = true;
-		std::cout << "change direction" << std::endl;
 	}
 
 	if (agent->position.y < 720 - 32 && agent->position.y > 0 + 32
@@ -80,7 +78,7 @@ void IdleState::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		directionX = false;
 		directionY = true;
-		agent->AddForce(glm::vec2(0, 100));
+		agent->AddForce(Vector2(0, 100));
 	}
 
 
@@ -93,7 +91,7 @@ void IdleState::update(float deltaTime, Agent * agent, StateManager * sm)
 	if (agent->position.y > 720 - 32)
 		agent->position.y = 720 - 32;
 
-	else if (glm::distance(agent->position, *target) < 250.0f)
+	else if (Vector2::distance(agent->position, *target) < 250.0f)
 		sm->changeState(agent, new SeekState(target, maxSpeed));
 }
 

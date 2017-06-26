@@ -5,6 +5,7 @@
 #include "StateManager.h"
 #include "SeekState.h"
 #include "IdleState.h"
+#include <time.h>
 
 Application2D::Application2D() {
 
@@ -16,6 +17,7 @@ Application2D::~Application2D() {
 
 bool Application2D::startup() {
 
+	srand((unsigned int)time(NULL));
 	m_2dRenderer = new aie::Renderer2D();
 
 	m_texture = new aie::Texture("./textures/numbered_grid.tga");
@@ -23,8 +25,8 @@ bool Application2D::startup() {
 
 	m_cameraX = 0;
 	m_cameraY = 0;
-	m_agent.push_back(new Agent(glm::vec2(200, 200)));
-	m_agent.push_back(new Agent(glm::vec2(1280 - 32, 720 - 32)));
+	m_agent.push_back(new Agent(Vector2(200, 200)));
+	m_agent.push_back(new Agent(Vector2(1280 - 32, 720 - 32)));
 
 	FSM = new StateManager();
 	m_agent[0]->AddBehaviours(new FollowMouse());

@@ -68,8 +68,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>bootstrap.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)math</AdditionalLibraryDirectories>
+      <AdditionalDependencies>math.lib;bootstrap.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)debug; $(SolutionDir)math;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="Application2D.cpp" />
+    <ClCompile Include="FleeState.cpp" />
     <ClCompile Include="FollowMouse.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
@@ -100,10 +101,12 @@
     <ClCompile Include="SeekState.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="WanderState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Application2D.h" />
+    <ClInclude Include="FleeState.h" />
     <ClInclude Include="FollowMouse.h" />
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="IdleState.h" />
@@ -111,6 +114,7 @@
     <ClInclude Include="SeekState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
+    <ClInclude Include="WanderState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

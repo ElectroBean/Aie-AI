@@ -1,13 +1,13 @@
 #pragma once
 #include "State.h"
-#include <glm\glm.hpp>
 #include "StateManager.h"
+#include <Vector2.h>
 
 class SeekState :
 	public State
 {
 public:
-	SeekState(glm::vec2* target, float maxSpeed);
+	SeekState(Vector2* target, float maxSpeed);
 	~SeekState();
 
 	void onEnter(Agent* agent);
@@ -15,7 +15,7 @@ public:
 	void update(float deltaTime, Agent* agent, StateManager* sm);
 
 private:
-	glm::vec2* target;
+	Vector2* target;
 	float maxSpeed;
 };
 
