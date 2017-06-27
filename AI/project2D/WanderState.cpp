@@ -2,8 +2,13 @@
 
 
 
-WanderState::WanderState(float wanderRadius, float wanderDistance, float jitterAmount)
+WanderState::WanderState(Agent* agent, float wanderRadius, float wanderDistance, float jitterAmount, float maxSpeed)
 {
+	this->wanderDistance = wanderDistance;
+	this->wanderRadius = wanderRadius;
+	this->jitterAmount = jitterAmount;
+	this->maxSpeed = maxSpeed;
+	previousTarget = agent->GlobalTransform;
 }
 
 
@@ -23,5 +28,5 @@ void WanderState::onExit(Agent * agent)
 
 void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 {
-
+	
 }
