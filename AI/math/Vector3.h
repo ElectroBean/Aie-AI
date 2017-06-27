@@ -26,6 +26,7 @@ public:
 	void setRotateX(float a_angle);
 	void setRotateY(float a_angle);
 	void setRotateZ(float a_angle);
+	static float distance(Vector3 lh, Vector3 rh);
 
 	explicit operator float*();
 

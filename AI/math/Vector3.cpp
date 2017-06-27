@@ -116,6 +116,14 @@ void Vector3::setRotateZ(float a_angle)
 	y = x * sinProduct + y * cosProduct;
 }
 
+float Vector3::distance(Vector3 lh, Vector3 rh)
+{
+	Vector3 diff = lh - rh;
+	float distance = sqrtf(diff.dot(diff));
+
+	return distance;
+}
+
 Vector3::operator float*()
 {
 	return data;

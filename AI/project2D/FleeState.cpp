@@ -2,7 +2,7 @@
 
 
 
-FleeState::FleeState(Vector2* target, float maxSpeed)
+FleeState::FleeState(Matrix3* target, float maxSpeed)
 {
 	this->target = target;
 	this->maxSpeed = maxSpeed;
@@ -23,7 +23,7 @@ void FleeState::onExit(Agent * agent)
 
 void FleeState::update(float deltaTime, Agent * agent, StateManager * sm)
 {
-	Vector2 dir = agent->position - *target;
+	Vector3 dir = agent->GlobalTransform.position - target->position;
 	dir.normalise();
 	dir = dir * maxSpeed;
 

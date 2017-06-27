@@ -1,22 +1,22 @@
 #pragma once
 #include "State.h"
-#include "StateManager.h"
-#include <Vector2.h>
+#include "Vector2.h"
 
-
-class FleeState :
+class PatrolState :
 	public State
 {
 public:
-	FleeState(Matrix3* target, float maxSpeed);
-	~FleeState();
-
+	PatrolState(Agent* target, float maxSpeed);
 	void onEnter(Agent* agent);
 	void onExit(Agent* agent);
 	void update(float deltaTime, Agent* agent, StateManager* sm);
+	~PatrolState();
 
-private:
-	Matrix3* target;
+private: 
+	Agent* target;
 	float maxSpeed;
+	Matrix3 searchPosition;
+	bool directionX;
+	bool directionY;
 };
 

@@ -7,7 +7,7 @@ class SeekState :
 	public State
 {
 public:
-	SeekState(Vector2* target, float maxSpeed);
+	SeekState(Agent* target, float maxSpeed);
 	~SeekState();
 
 	void onEnter(Agent* agent);
@@ -15,7 +15,11 @@ public:
 	void update(float deltaTime, Agent* agent, StateManager* sm);
 
 private:
-	Vector2* target;
+	Agent* target;
 	float maxSpeed;
 };
+
+//get distance 
+// divide by maxdistance
+// * by result
 

@@ -93,9 +93,10 @@
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="Application2D.cpp" />
+    <ClCompile Include="ArriveState.cpp" />
     <ClCompile Include="FleeState.cpp" />
     <ClCompile Include="FollowMouse.cpp" />
-    <ClCompile Include="IdleState.cpp" />
+    <ClCompile Include="PatrolState.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SeekState.cpp" />
@@ -106,10 +107,11 @@
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Application2D.h" />
+    <ClInclude Include="ArriveState.h" />
     <ClInclude Include="FleeState.h" />
     <ClInclude Include="FollowMouse.h" />
     <ClInclude Include="IBehaviour.h" />
-    <ClInclude Include="IdleState.h" />
+    <ClInclude Include="PatrolState.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="SeekState.h" />
     <ClInclude Include="State.h" />

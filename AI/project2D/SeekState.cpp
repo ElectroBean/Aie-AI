@@ -1,8 +1,8 @@
 #include "SeekState.h"
-#include "IdleState.h"
+#include "PatrolState.h"
 
 
-SeekState::SeekState(Vector2* target, float maxSpeed)
+SeekState::SeekState(Agent* target, float maxSpeed)
 {
 	this->target = target;
 	this->maxSpeed = maxSpeed;
@@ -25,13 +25,18 @@ void SeekState::onExit(Agent * agent)
 
 void SeekState::update(float deltaTime, Agent * agent, StateManager * sm)
 {
-	Vector2 dir = *target - agent->position;
+	Vector3 dir = target->GlobalTransform.position - agent->GlobalTransform.position;
 	dir.normalise();
+
+	float distance = Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position);
+	if (maxSpeed > distance)
+		maxSpeed = distance;
+
 	dir = dir * maxSpeed;
 
-	agent->velocity = dir;
+	agent->velocity = agent->velocity + dir * deltaTime;
 
-	if (Vector2::distance(agent->position, *target) > 250.0f)
+	if (Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position) > 250.0f)
 		//change states if the distance between agent and target is above 250 units
-		sm->changeState(agent, new IdleState(target, maxSpeed));
+		sm->changeState(agent, new PatrolState(target, maxSpeed));
 }

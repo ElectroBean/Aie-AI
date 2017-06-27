@@ -4,8 +4,9 @@
 #include "Input.h"
 #include "StateManager.h"
 #include "SeekState.h"
-#include "IdleState.h"
+#include "PatrolState.h"
 #include <time.h>
+#include "ArriveState.h"
 
 Application2D::Application2D() {
 
@@ -25,13 +26,13 @@ bool Application2D::startup() {
 
 	m_cameraX = 0;
 	m_cameraY = 0;
-	m_agent.push_back(new Agent(Vector2(200, 200)));
-	m_agent.push_back(new Agent(Vector2(1280 - 32, 720 - 32)));
+	m_agent.push_back(new Agent(Vector3(100, 200, 0)));
+	m_agent.push_back(new Agent(Vector3(1280 - 32, 720 - 32, 0)));
 
 	FSM = new StateManager();
 	m_agent[0]->AddBehaviours(new FollowMouse());
 	m_agent[1]->AddBehaviours(FSM);
-	FSM->changeState(m_agent[1], new IdleState(&m_agent[0]->position, 50.f));
+	FSM->changeState(m_agent[1], new PatrolState(m_agent[0], 500.f));
 
 	return true;
 }
@@ -75,8 +76,8 @@ void Application2D::draw() {
 	// begin drawing sprites
 	m_2dRenderer->begin();
 
-	m_2dRenderer->drawSprite(m_shipTexture, m_agent[0]->position.x, m_agent[0]->position.y, 32, 32, 0, 0);
-	m_2dRenderer->drawSprite(m_shipTexture, m_agent[1]->position.x, m_agent[1]->position.y, 32, 32, 0, 0);
+	m_2dRenderer->drawSprite(m_shipTexture, m_agent[0]->GlobalTransform.position.x, m_agent[0]->GlobalTransform.position.y, 32, 32, 0, 0);
+	m_2dRenderer->drawSprite(m_shipTexture, m_agent[1]->GlobalTransform.position.x, m_agent[1]->GlobalTransform.position.y, 32, 32, 0, 0);
 	// done drawing sprites
 	m_2dRenderer->end();
 }

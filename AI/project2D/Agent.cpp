@@ -4,12 +4,12 @@
 
 Agent::Agent()
 {
-	
+
 }
 
-Agent::Agent(Vector2 position)
+Agent::Agent(Vector3 position)
 {
-	this->position = position;
+	this->GlobalTransform.position = position;
 }
 
 
@@ -17,7 +17,7 @@ Agent::~Agent()
 {
 }
 
-void Agent::AddForce(Vector2 a_force)
+void Agent::AddForce(Vector3 a_force)
 {
 	acceleration = acceleration + a_force;
 }
@@ -30,10 +30,10 @@ void Agent::update(float deltaTime)
 	}
 
 	AddForce(velocity * -1.0f);
-	position = position + velocity * deltaTime;
+	GlobalTransform.position = GlobalTransform.position + velocity * deltaTime;
 	velocity = velocity + acceleration * deltaTime;
 
-	acceleration = Vector2(0, 0);
+	acceleration = Vector3(0, 0, 0);
 }
 
 void Agent::AddBehaviours(IBehaviour * behaviour)
