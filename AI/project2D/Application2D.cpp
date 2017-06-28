@@ -7,6 +7,7 @@
 #include "PatrolState.h"
 #include <time.h>
 #include "ArriveState.h"
+#include "WanderState.h"
 
 Application2D::Application2D() {
 
@@ -27,12 +28,13 @@ bool Application2D::startup() {
 	m_cameraX = 0;
 	m_cameraY = 0;
 	m_agent.push_back(new Agent(Vector3(100, 200, 0)));
-	m_agent.push_back(new Agent(Vector3(1280 - 32, 720 - 32, 0)));
+	//m_agent.push_back(new Agent(Vector3(1280 - 32, 720 - 32, 0)));
+	m_agent.push_back(new Agent(Vector3(1280 / 2, 720/ 2, 0)));
 
 	FSM = new StateManager();
 	m_agent[0]->AddBehaviours(new FollowMouse());
 	m_agent[1]->AddBehaviours(FSM);
-	FSM->changeState(m_agent[1], new PatrolState(m_agent[0], 500.f));
+	FSM->changeState(m_agent[1], new WanderState(m_agent[0], 100.f, 0.01f, 100.0f, 100.0f));
 
 	return true;
 }

@@ -13,5 +13,6 @@ public:
 
 protected:
 	aie::Input* inputs;
+	float moveSpeed;
 };
 

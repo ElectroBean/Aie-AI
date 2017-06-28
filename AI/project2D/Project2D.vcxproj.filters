@@ -75,6 +75,9 @@
     <ClCompile Include="PatrolState.cpp">
       <Filter>Source Files\StateManager\States</Filter>
     </ClCompile>
+    <ClCompile Include="PursueState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application2D.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="PatrolState.h">
       <Filter>Header Files\Statemanager\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PursueState.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

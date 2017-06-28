@@ -17,5 +17,8 @@ private:
 	float jitterAmount;
 	float maxSpeed;
 	Matrix3 previousTarget;
+	bool reachedPos;
+	Matrix3 wanderCircle;
+	Matrix3 nextPosition;
 };
 

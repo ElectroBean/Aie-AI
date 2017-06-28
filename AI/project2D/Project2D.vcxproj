@@ -99,6 +99,7 @@
     <ClCompile Include="PatrolState.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PursueState.cpp" />
     <ClCompile Include="SeekState.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateManager.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="IBehaviour.h" />
     <ClInclude Include="PatrolState.h" />
     <ClInclude Include="KeyboardController.h" />
+    <ClInclude Include="PursueState.h" />
     <ClInclude Include="SeekState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
