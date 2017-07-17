@@ -37,6 +37,12 @@
     <Filter Include="Source Files\StateManager\States">
       <UniqueIdentifier>{35427f59-75e3-4771-a280-a04f9d6145fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Path Finding">
+      <UniqueIdentifier>{2a2f6907-453b-45ff-8686-e5b315298958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Path Finding">
+      <UniqueIdentifier>{a6807ec4-4785-40d5-b69e-13b42fcde826}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application2D.cpp">
@@ -76,7 +82,13 @@
       <Filter>Source Files\StateManager\States</Filter>
     </ClCompile>
     <ClCompile Include="PursueState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\StateManager\States</Filter>
+    </ClCompile>
+    <ClCompile Include="pathFinding.cpp">
+      <Filter>Source Files\Path Finding</Filter>
+    </ClCompile>
+    <ClCompile Include="Graph.cpp">
+      <Filter>Source Files\Path Finding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +129,13 @@
       <Filter>Header Files\Statemanager\States</Filter>
     </ClInclude>
     <ClInclude Include="PursueState.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Statemanager\States</Filter>
+    </ClInclude>
+    <ClInclude Include="pathFinding.h">
+      <Filter>Header Files\Path Finding</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>Header Files\Path Finding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

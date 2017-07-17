@@ -55,13 +55,14 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 			reachedPos = false;
 		}
 	}
+
 	//we're at the destination
 	else
 	{
 		wanderCircle.position = Vector3(agent->GlobalTransform.position + (agent->GlobalTransform.position * wanderDistance));
 
-		int xRand = rand() % 100 + -100;
-		int yRand = rand() % 100 + -100;
+		int xRand = rand();// % (50 - -50 + 1) + -50;
+		int yRand = rand();// % (50 - -50 + 1) + -50;
 
 		Vector3 randCircumPoint = Vector3(float(xRand), float(yRand), 0);
 
