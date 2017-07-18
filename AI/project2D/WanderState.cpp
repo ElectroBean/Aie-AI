@@ -61,10 +61,10 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		wanderCircle.position = Vector3(agent->GlobalTransform.position + (agent->GlobalTransform.position * wanderDistance));
 
-		int xRand = rand();// % (50 - -50 + 1) + -50;
-		int yRand = rand();// % (50 - -50 + 1) + -50;
+		int xRand = rand() % (50 - -50 + 1) + -50;
+		int yRand = rand() % (50 - -50 + 1) + -50;
 
-		Vector3 randCircumPoint = Vector3(float(xRand), float(yRand), 0);
+		randCircumPoint = Vector3(float(xRand), float(yRand), 0);
 
 		randCircumPoint.normalise();
 		Vector3 wanderPos = wanderCircle.position + randCircumPoint * wanderRadius;
@@ -72,5 +72,7 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 		nextPosition.position = wanderPos;
 		std::cout << "position changed" << std::endl;
 		reachedPos = false;
+
 	}
+
 }

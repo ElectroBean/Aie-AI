@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+
 class WanderState :
 	public State
 {
@@ -20,5 +21,6 @@ private:
 	bool reachedPos;
 	Matrix3 wanderCircle;
 	Matrix3 nextPosition;
+	Vector3 randCircumPoint;
 };
 

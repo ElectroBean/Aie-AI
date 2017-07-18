@@ -181,6 +181,13 @@ Vector3 Vector3::EaseLerp(Vector3 rhs, float t, float time)
 	return *this;
 }
 
+bool Vector3::operator==(const Vector3 & a_second) const
+{
+	return (this->x == a_second.x
+		&& this->y == a_second.y
+		&& this->z == a_second.z);
+}
+
 Vector3 operator*(const float a_fscale, const Vector3 & a_RHS)
 {
 	return a_RHS * a_fscale;

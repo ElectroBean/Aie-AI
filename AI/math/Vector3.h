@@ -38,6 +38,7 @@ public:
 	float& operator[](int a_i);
 	Vector3 Interpolate(Vector3 rhs, float t);
 	Vector3 EaseLerp(Vector3 rhs, float t, float time);
+	bool operator==(const Vector3& a_second) const;
 };
 
 Vector3 operator*(const float a_fscale, const Vector3& a_RHS);

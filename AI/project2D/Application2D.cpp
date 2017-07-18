@@ -29,13 +29,24 @@ bool Application2D::startup() {
 	m_cameraY = 0;
 	m_agent.push_back(new Agent(Vector3(100, 200, 0)));
 	//m_agent.push_back(new Agent(Vector3(1280 - 32, 720 - 32, 0)));
-	m_agent.push_back(new Agent(Vector3(1280 / 2, 720/ 2, 0)));
+	m_agent.push_back(new Agent(Vector3(1280 / 2, 720 / 2, 0)));
 
 	FSM = new StateManager();
 	m_agent[0]->AddBehaviours(new FollowMouse());
 	m_agent[1]->AddBehaviours(FSM);
 	FSM->changeState(m_agent[1], new WanderState(m_agent[0], 100.f, 0.01f, 100.0f, 100.0f));
 
+
+	graph = new Graph();
+	for (int i = 0; i < 29; i++)
+	{
+		for (int j = 0; j < 25; j++)
+		{
+			Graph::node* node = new Graph::node();
+			node->position = Vector3((45 * (i + 1) - 35), (Application::getWindowHeight() - ((j + 1) * 30) + 45), 0);
+			graph->addNode(node);
+		}
+	}
 	return true;
 }
 
@@ -57,6 +68,7 @@ void Application2D::update(float deltaTime) {
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
+	graph->djikstraSearch(graph->nodes[2], graph->nodes[256]);
 	for (auto agent : m_agent)
 	{
 		agent->update(deltaTime);
@@ -77,6 +89,18 @@ void Application2D::draw() {
 
 	// begin drawing sprites
 	m_2dRenderer->begin();
+
+	for (int i = 0; i < graph->nodes.size(); i++)
+	{
+		if (!graph->nodes[i]->highlighted)
+		{
+			m_2dRenderer->setRenderColour(1, 0, 0, 1);
+			m_2dRenderer->drawBox(graph->nodes[i]->position.x, graph->nodes[i]->position.y, 10, 10);
+			m_2dRenderer->setRenderColour(1, 1, 1, 1);
+		}
+		else if(graph->nodes[i]->highlighted)
+			m_2dRenderer->drawBox(graph->nodes[i]->position.x, graph->nodes[i]->position.y, 10, 10);
+	}
 
 	m_2dRenderer->drawSprite(m_shipTexture, m_agent[0]->GlobalTransform.position.x, m_agent[0]->GlobalTransform.position.y, 32, 32, 0, 0);
 	m_2dRenderer->drawSprite(m_shipTexture, m_agent[1]->GlobalTransform.position.x, m_agent[1]->GlobalTransform.position.y, 32, 32, 0, 0);

@@ -2,7 +2,6 @@
 #include <functional>
 #include <Vector3.h>
 #include <vector>
-using namespace aie;
 
 namespace aie
 {
@@ -19,6 +18,7 @@ public:
 	{
 		node* nodeA;
 		node* nodeB;
+		float cost;
 	};
 
 	struct node
@@ -29,16 +29,22 @@ public:
 		bool highlighted;
 		node* parent;
 		std::vector<edge*> connections;
+		float hScore;
+		float fScore;
 
 		static bool compareGScore(node* a, node* b)
 		{
 			return a->gScore < b->gScore;
 		}
+		static bool compareFScore(node* a, node* b)
+		{
+			return a->fScore < b->fScore;
+		}
 	};
 
-	void addNote(node* node);
+	void addNode(node* node);
 	void connectNodes(node* a, node* b, float cost);
-	node* findNode(Vector3 position);
+	node* findNode(Vector3 position, float distance);
 	std::vector<node*> djikstraSearch(node* startNode, node* endNode);
 	void Draw(aie::Render2D* spritebatch);
 	std::vector<node*> nodes;

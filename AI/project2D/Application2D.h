@@ -8,6 +8,7 @@
 #include "Agent.h"
 #include "KeyboardController.h"
 #include "FollowMouse.h"
+#include "Graph.h"
 
 class StateManager;
 
@@ -33,4 +34,5 @@ protected:
 	float m_cameraX, m_cameraY;
 	std::vector<Agent*>	m_agent;
 	StateManager* FSM;
+	Graph* graph;
 };
