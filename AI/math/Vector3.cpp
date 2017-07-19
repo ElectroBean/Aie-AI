@@ -119,8 +119,8 @@ void Vector3::setRotateZ(float a_angle)
 float Vector3::distance(Vector3 lh, Vector3 rh)
 {
 	Vector3 diff = lh - rh;
-	float distance = sqrtf(diff.dot(diff));
-
+	//float distance = sqrtf(diff.dot(diff));
+	float distance = diff.magnitude();
 	return distance;
 }
 

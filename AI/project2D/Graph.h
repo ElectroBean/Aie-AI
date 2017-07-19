@@ -5,7 +5,7 @@
 
 namespace aie
 {
-	class Render2D;
+	class Renderer2D;
 }
 
 class Graph
@@ -45,8 +45,8 @@ public:
 	void addNode(node* node);
 	void connectNodes(node* a, node* b, float cost);
 	node* findNode(Vector3 position, float distance);
-	std::vector<node*> djikstraSearch(node* startNode, node* endNode);
-	void Draw(aie::Render2D* spritebatch);
+	std::vector<Vector3> djikstraSearch(node* startNode, node* endNode);
+	void Draw(aie::Renderer2D* spritebatch);
 	std::vector<node*> nodes;
 
 };
