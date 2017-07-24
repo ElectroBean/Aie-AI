@@ -2,6 +2,7 @@
 #include "State.h"
 #include "StateManager.h"
 #include <Vector2.h>
+#include "WanderState.h"
 
 class SeekState :
 	public State

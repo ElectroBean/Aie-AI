@@ -97,7 +97,6 @@
     <ClCompile Include="FleeState.cpp" />
     <ClCompile Include="FollowMouse.cpp" />
     <ClCompile Include="Graph.cpp" />
-    <ClCompile Include="pathFinding.cpp" />
     <ClCompile Include="PatrolState.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
@@ -115,7 +114,6 @@
     <ClInclude Include="FollowMouse.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="IBehaviour.h" />
-    <ClInclude Include="pathFinding.h" />
     <ClInclude Include="PatrolState.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="PursueState.h" />

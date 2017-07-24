@@ -2,13 +2,14 @@
 
 
 
-WanderState::WanderState(Agent* agent, float wanderRadius, float wanderDistance, float jitterAmount, float maxSpeed)
+WanderState::WanderState(Agent* agent, float wanderRadius, float wanderDistance, float jitterAmount, float maxSpeed, Agent * target)
 {
 	this->wanderDistance = wanderDistance;
 	this->wanderRadius = wanderRadius;
 	this->jitterAmount = jitterAmount;
 	this->maxSpeed = maxSpeed;
 	previousTarget = agent->GlobalTransform;
+	this->target = target;
 }
 
 
@@ -42,7 +43,7 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 		agent->velocity = agent->velocity + dir * deltaTime;
 
 
-		
+
 
 
 		if (Vector3::distance(nextPosition.position, agent->GlobalTransform.position) < 1.0f)
@@ -75,4 +76,21 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 
 	}
 
+	if (Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position) < 50)
+	{
+		if (agent->getHealth() >= 25.0f)
+		{
+			sm->changeState(agent, new SeekState(target, maxSpeed));
+			std::cout << "seeking" << std::endl;
+			//now seeking
+
+		}
+		else if (agent->getHealth() < 25.0f)
+		{
+			sm->changeState(agent, new FleeState(target, maxSpeed));
+			std::cout << "fleeing" << std::endl;
+			//now fleeing
+
+		}
+	}
 }

@@ -26,8 +26,8 @@ void Graph::connectNodes(node * a, node * b, float cost)
 	edge* edge = new Graph::edge();
 	edge->cost = cost;
 	edge->nodeA = a; edge->nodeB = b;
-	a->connections.push_back(edge);
-	//b->connections.push_back(edge);
+	//a->connections.push_back(edge);
+	b->connections.push_back(edge);
 }
 
 Graph::node * Graph::findNode(Vector3 position, float distance)
@@ -56,7 +56,7 @@ std::vector<Vector3> Graph::djikstraSearch(node * startNode, node * endNode)
 	startNode->parent = nullptr;
 	// push the start
 	openList.push_back(startNode);
-
+	
 	while (!openList.empty())
 	{
 		openList.sort(node::compareGScore);
@@ -68,23 +68,23 @@ std::vector<Vector3> Graph::djikstraSearch(node * startNode, node * endNode)
 
 		openList.remove(cNode);
 		closedList.push_back(cNode);
-
+		
 		for (auto connections : cNode->connections)
 		{
 			bool foundNode = false;
 			for (auto iter : closedList)
 			{
-				if (iter == connections->nodeB)
+				if (iter == connections->nodeA)
 				{
 					foundNode = true;
 				}
 			}
-			if (!foundNode)//dis dont work
-
+			if ( foundNode == false)//dis dont work
 			{
-				openList.push_back(connections->nodeB);
-				connections->nodeB->gScore = cNode->gScore + connections->cost;
-				connections->nodeB->parent = cNode;
+				openList.push_back(connections->nodeA);
+				connections->nodeA->gScore = cNode->gScore + connections->cost;
+				connections->nodeA->parent = cNode;
+				
 			}
 		}
 	}
@@ -97,6 +97,7 @@ std::vector<Vector3> Graph::djikstraSearch(node * startNode, node * endNode)
 		currentPathNode->highlighted = true;
 		currentPathNode = currentPathNode->parent;
 	}
+
 	return path;
 }
 
@@ -123,11 +124,17 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 			spritebatch->setRenderColour(1, 1, 1, 1);
 		}
 		else if (node->highlighted)
+		{
+			spritebatch->setRenderColour(0, 1, 0, 1);
 			spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
+			spritebatch->setRenderColour(1, 1, 1, 1);
+		}
 
 		for (auto e : node->connections)
 		{
 			spritebatch->drawLine(e->nodeA->position.x, e->nodeA->position.y, e->nodeB->position.x, e->nodeB->position.y);
 		}
+
+		//spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
 	}
 }

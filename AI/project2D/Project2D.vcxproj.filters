@@ -84,9 +84,6 @@
     <ClCompile Include="PursueState.cpp">
       <Filter>Source Files\StateManager\States</Filter>
     </ClCompile>
-    <ClCompile Include="pathFinding.cpp">
-      <Filter>Source Files\Path Finding</Filter>
-    </ClCompile>
     <ClCompile Include="Graph.cpp">
       <Filter>Source Files\Path Finding</Filter>
     </ClCompile>
@@ -130,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="PursueState.h">
       <Filter>Header Files\Statemanager\States</Filter>
-    </ClInclude>
-    <ClInclude Include="pathFinding.h">
-      <Filter>Header Files\Path Finding</Filter>
     </ClInclude>
     <ClInclude Include="Graph.h">
       <Filter>Header Files\Path Finding</Filter>

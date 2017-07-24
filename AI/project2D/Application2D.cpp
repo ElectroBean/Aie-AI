@@ -27,20 +27,20 @@ bool Application2D::startup() {
 
 	m_cameraX = 0;
 	m_cameraY = 0;
-	m_agent.push_back(new Agent(Vector3(100, 200, 0)));
+	m_agent.push_back(new Agent(Vector3(100, 200, 0), new aie::Texture("./textures/car.png")));
 	//m_agent.push_back(new Agent(Vector3(1280 - 32, 720 - 32, 0)));
-	m_agent.push_back(new Agent(Vector3(1280 / 2, 720 / 2, 0)));
+	m_agent.push_back(new Agent(Vector3(1280 / 2, 720 / 2, 0), new aie::Texture("./textures/ship.png")));
 
 	FSM = new StateManager();
 	m_agent[0]->AddBehaviours(new FollowMouse());
 	m_agent[1]->AddBehaviours(FSM);
-	FSM->changeState(m_agent[1], new WanderState(m_agent[0], 100.f, 0.01f, 100.0f, 100.0f));
+	FSM->changeState(m_agent[1], new WanderState(m_agent[0], 100.f, 0.01f, 100.0f, 100.0f, m_agent[0]));
 
 
 	graph = new Graph();
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 10; j++)
 		{
 			Graph::node* node = new Graph::node();
 			node->position = Vector3((45 * (i + 1) - 35), (Application::getWindowHeight() - ((j + 1) * 45) + 35), 0);
@@ -59,7 +59,7 @@ bool Application2D::startup() {
 
 			float dist = Vector3::distance(a->position, b->position);
 			if(dist <= 45)
-			graph->connectNodes(a, b, 1);
+			graph->connectNodes(a, b, dist);
 
 			//else break;
 		}
@@ -85,7 +85,16 @@ void Application2D::update(float deltaTime) {
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
-	graph->djikstraSearch(graph->nodes[2], graph->nodes[20]);
+	
+
+	std::vector<Vector3> newNode = graph->djikstraSearch(graph->nodes[5], graph->nodes[79]);
+
+	/*for (auto c : newNode)
+	{
+		c.
+	}*/
+
+
 	for (auto agent : m_agent)
 	{
 		agent->update(deltaTime);
@@ -109,8 +118,13 @@ void Application2D::draw() {
 
 	graph->Draw(m_2dRenderer);
 
-	m_2dRenderer->drawSprite(m_shipTexture, m_agent[0]->GlobalTransform.position.x, m_agent[0]->GlobalTransform.position.y, 32, 32, 0, 0);
-	m_2dRenderer->drawSprite(m_shipTexture, m_agent[1]->GlobalTransform.position.x, m_agent[1]->GlobalTransform.position.y, 32, 32, 0, 0);
+
+	for (auto agent : m_agent)
+	{
+		agent->Draw(m_2dRenderer);
+	}
+	//m_2dRenderer->drawSprite(m_shipTexture, m_agent[0]->GlobalTransform.position.x, m_agent[0]->GlobalTransform.position.y, 32, 32, 0, 0);
+	//m_2dRenderer->drawSprite(m_shipTexture, m_agent[1]->GlobalTransform.position.x, m_agent[1]->GlobalTransform.position.y, 32, 32, 0, 0);
 	// done drawing sprites
 	m_2dRenderer->end();
 }

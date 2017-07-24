@@ -1,11 +1,14 @@
 #pragma once
 #include "State.h"
+#include "StateManager.h"
+#include "SeekState.h"
+#include "FleeState.h"
 
 class WanderState :
 	public State
 {
 public:
-	WanderState(Agent* agent, float wanderRadius, float wanderDistance, float jitterAmount, float maxSpeed);
+	WanderState(Agent* agent, float wanderRadius, float wanderDistance, float jitterAmount, float maxSpeed, Agent * target);
 	~WanderState();
 
 	void onEnter(Agent* agent);
@@ -22,5 +25,8 @@ private:
 	Matrix3 wanderCircle;
 	Matrix3 nextPosition;
 	Vector3 randCircumPoint;
+	
+
+	Agent* target;
 };
 

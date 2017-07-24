@@ -40,6 +40,9 @@ public:
 		{
 			return a->fScore < b->fScore;
 		}
+
+		Vector3 getPos() { return position; }
+
 	};
 
 	void addNode(node* node);

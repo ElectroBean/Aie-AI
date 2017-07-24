@@ -9,6 +9,7 @@
 #include "KeyboardController.h"
 #include "FollowMouse.h"
 #include "Graph.h"
+#include <vector>
 
 class StateManager;
 
