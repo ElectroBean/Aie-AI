@@ -29,7 +29,7 @@ void FleeState::update(float deltaTime, Agent * agent, StateManager * sm)
 
 	agent->velocity = dir;
 
-	if (Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position))
+	if (Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position) > 50)
 	{
 		sm->changeState(agent, new WanderState(target, 100.f, 0.01f, 100.0f, 100.0f, target));
 	}

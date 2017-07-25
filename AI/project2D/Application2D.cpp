@@ -38,32 +38,41 @@ bool Application2D::startup() {
 
 
 	graph = new Graph();
-	for (int i = 0; i < 10; i++)
+	float winHeight = getWindowHeight();
+	for (int i = 0; i < 37; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < 21; j++)
 		{
 			Graph::node* node = new Graph::node();
-			node->position = Vector3((45 * (i + 1) - 35), (Application::getWindowHeight() - ((j + 1) * 45) + 35), 0);
+			
+			node->position = Vector3((35 * (i + 1) - 25), (winHeight - ((j + 1) * 35) + 25), 0);
+			
 			graph->addNode(node);
-			//graph->connectNodes(graph->nodes[i * j], graph->nodes[i * j], 1);
 		}
 	}
 	for (auto a : graph->nodes)
 	{
-		//graph->connectNodes(graph->nodes[i], graph->nodes[i], 1);
 
 		for (auto b : graph->nodes)
 		{
 			if (a == b)
-				break;
+				continue;
 
 			float dist = Vector3::distance(a->position, b->position);
-			if(dist <= 45)
+			if(dist <= 50)
 			graph->connectNodes(a, b, dist);
 
 			//else break;
 		}
 	}
+
+	Graph::node* start = graph->findNode(Vector3(1270, 10, 0), 10);
+	Graph::node* end = graph->findNode(Vector3(10, 710, 0), 10);
+
+
+	//graph->djikstraSearch(graph->nodes[75], graph->nodes[125]);
+      graph->aStarSearch(graph->nodes[99], graph->nodes[356]);
+	//graph->aStarSearch(end, start);
 	return true;
 }
 
@@ -84,16 +93,6 @@ void Application2D::update(float deltaTime) {
 
 	// input example
 	aie::Input* input = aie::Input::getInstance();
-
-	
-
-	std::vector<Vector3> newNode = graph->djikstraSearch(graph->nodes[5], graph->nodes[79]);
-
-	/*for (auto c : newNode)
-	{
-		c.
-	}*/
-
 
 	for (auto agent : m_agent)
 	{

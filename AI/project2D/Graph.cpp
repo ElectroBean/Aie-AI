@@ -23,7 +23,7 @@ void Graph::addNode(node * node)
 
 void Graph::connectNodes(node * a, node * b, float cost)
 {
-	edge* edge = new Graph::edge();
+	Graph::edge* edge = new Graph::edge();
 	edge->cost = cost;
 	edge->nodeA = a; edge->nodeB = b;
 	//a->connections.push_back(edge);
@@ -47,6 +47,12 @@ Graph::node * Graph::findNode(Vector3 position, float distance)
 
 std::vector<Vector3> Graph::djikstraSearch(node * startNode, node * endNode)
 {
+	//set gscores to 0 && parents to null
+	for (auto node : nodes)
+	{
+		node->gScore = 0;
+		node->parent = nullptr;
+	}
 	//list of nodes yet to be visited
 	std::list<node*> openList;
 	//list ofnodes that have been traversed
@@ -56,10 +62,72 @@ std::vector<Vector3> Graph::djikstraSearch(node * startNode, node * endNode)
 	startNode->parent = nullptr;
 	// push the start
 	openList.push_back(startNode);
-	
+
+	//while the open list is not empty
 	while (!openList.empty())
 	{
+		//sort by gscore
 		openList.sort(node::compareGScore);
+
+		//current node = openlist front
+		auto cNode = openList.front();
+
+		//if currentNode is endNode break 
+		if (cNode == endNode)
+			break;
+
+		//remove current node from open list and put it in closed list
+		openList.remove(cNode);
+		closedList.push_back(cNode);
+
+		for (auto connections : cNode->connections)
+		{
+			bool foundNode = false;
+			auto iter = find(closedList.begin(), closedList.end(), connections->nodeA);
+			for (auto iter : closedList)
+			{
+				if (iter == connections->nodeA)
+				{
+					foundNode = true;
+				}
+			}
+
+			if (foundNode == false)
+			{
+				openList.push_back(connections->nodeA);
+				connections->nodeA->gScore = cNode->gScore + connections->cost;
+				connections->nodeA->parent = cNode;
+			}
+		}
+	}
+
+	std::vector<Vector3> path;
+	node* currentPathNode = endNode;
+	while (currentPathNode != nullptr)
+	{
+		path.push_back(currentPathNode->position);
+		currentPathNode->highlighted = true;
+		currentPathNode = currentPathNode->parent;
+	}
+
+	return path;
+}
+
+std::vector<Vector3> Graph::aStarSearch(node * startNode, node * endNode)
+{
+	//list of nodes yet to be visited
+	std::list<node*> openList;
+	//list ofnodes that have been traversed
+	std::list<node*> closedList;
+
+	// set the start nde parent to null
+	startNode->parent = nullptr;
+	// push the start
+	openList.push_back(startNode);
+
+	while (!openList.empty())
+	{
+		openList.sort(node::compareFScore);
 
 		auto cNode = openList.front();
 
@@ -68,7 +136,7 @@ std::vector<Vector3> Graph::djikstraSearch(node * startNode, node * endNode)
 
 		openList.remove(cNode);
 		closedList.push_back(cNode);
-		
+
 		for (auto connections : cNode->connections)
 		{
 			bool foundNode = false;
@@ -79,12 +147,15 @@ std::vector<Vector3> Graph::djikstraSearch(node * startNode, node * endNode)
 					foundNode = true;
 				}
 			}
-			if ( foundNode == false)//dis dont work
+			if (foundNode == false)//dis dont work
 			{
+				auto n = connections->nodeA;
 				openList.push_back(connections->nodeA);
 				connections->nodeA->gScore = cNode->gScore + connections->cost;
+				connections->nodeA->hScore = Vector3::distance(connections->nodeA->position, endNode->position);
+				connections->nodeA->fScore = connections->nodeA->gScore + connections->nodeB->hScore;
 				connections->nodeA->parent = cNode;
-				
+
 			}
 		}
 	}
@@ -103,38 +174,38 @@ std::vector<Vector3> Graph::djikstraSearch(node * startNode, node * endNode)
 
 void Graph::Draw(aie::Renderer2D * spritebatch)
 {
-	for (int i = 0; i < nodes.size(); i++)
-	{
-		if (!nodes[i]->highlighted)
-		{
-			//->setRenderColour(1, 0, 0, 1);
-			//->drawBox(nodes[i]->position.x, nodes[i]->position.y, 10, 10);
-			//->setRenderColour(1, 1, 1, 1);
-		}
-	}
-
+	//for all nodes within nodes vector
 	for (auto node : nodes)
 	{
-		//spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
+		//for all connections within current node
+		for (auto e : node->connections)
+		{
+			//check if both connections are highlighted
+			if (e->nodeA->highlighted && e->nodeB->highlighted)
+			{
+				//draw the edge as red
+				spritebatch->setRenderColour(1, 0, 0, 1);
+				spritebatch->drawLine(e->nodeA->position.x, e->nodeA->position.y, e->nodeB->position.x, e->nodeB->position.y);
+				spritebatch->setRenderColour(1, 1, 1, 1);
+			
+			}
+			else
+				//draw as white
+			spritebatch->drawLine(e->nodeA->position.x, e->nodeA->position.y, e->nodeB->position.x, e->nodeB->position.y);
+		}
 
 		if (!node->highlighted)
 		{
-			spritebatch->setRenderColour(1, 0, 0, 1);
+			//spritebatch->setRenderColour(1, 0, 0, 1);
 			spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
 			spritebatch->setRenderColour(1, 1, 1, 1);
 		}
 		else if (node->highlighted)
 		{
-			spritebatch->setRenderColour(0, 1, 0, 1);
+			spritebatch->setRenderColour(1, 0, 0, 1);
 			spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
 			spritebatch->setRenderColour(1, 1, 1, 1);
 		}
 
-		for (auto e : node->connections)
-		{
-			spritebatch->drawLine(e->nodeA->position.x, e->nodeA->position.y, e->nodeB->position.x, e->nodeB->position.y);
-		}
-
-		//spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
 	}
 }

@@ -49,6 +49,7 @@ public:
 	void connectNodes(node* a, node* b, float cost);
 	node* findNode(Vector3 position, float distance);
 	std::vector<Vector3> djikstraSearch(node* startNode, node* endNode);
+	std::vector<Vector3> aStarSearch(node* startNode, node* endNode);
 	void Draw(aie::Renderer2D* spritebatch);
 	std::vector<node*> nodes;
 
