@@ -19,6 +19,8 @@ public:
 		node* nodeA;
 		node* nodeB;
 		float cost;
+		bool highlighted = false;
+		bool traversable = true;
 	};
 
 	struct node
@@ -31,6 +33,8 @@ public:
 		std::vector<edge*> connections;
 		float hScore;
 		float fScore;
+		bool visited = false;
+		bool traversable = true;
 
 		static bool compareGScore(node* a, node* b)
 		{

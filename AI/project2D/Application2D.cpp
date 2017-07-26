@@ -59,20 +59,12 @@ bool Application2D::startup() {
 				continue;
 
 			float dist = Vector3::distance(a->position, b->position);
-			if(dist <= 50)
+			if(dist <= 40)
 			graph->connectNodes(a, b, dist);
 
 			//else break;
 		}
 	}
-
-	Graph::node* start = graph->findNode(Vector3(1270, 10, 0), 10);
-	Graph::node* end = graph->findNode(Vector3(10, 710, 0), 10);
-
-
-	//graph->djikstraSearch(graph->nodes[75], graph->nodes[125]);
-      graph->aStarSearch(graph->nodes[99], graph->nodes[356]);
-	//graph->aStarSearch(end, start);
 	return true;
 }
 
@@ -98,6 +90,34 @@ void Application2D::update(float deltaTime) {
 	{
 		agent->update(deltaTime);
 	}
+	if (input->wasMouseButtonPressed(1))
+	{
+		int x = 0; 
+		int y = 0;
+		input->getMouseXY(&x, &y);
+		node1 = graph->findNode(Vector3(x, y, 0), 10);
+	}
+	if (input->wasMouseButtonPressed(0))
+	{
+		int x = 0;
+		int y = 0;
+		input->getMouseXY(&x, &y);
+		node2 = graph->findNode(Vector3(x, y, 0), 10);
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
+	{
+		graph->aStarSearch(node1, node2);
+	}
+	if (input->isKeyDown(aie::INPUT_KEY_LEFT_SHIFT))
+	{
+		int x = 0;
+		int y = 0;
+		input->getMouseXY(&x, &y);
+		Graph::node* node = graph->findNode(Vector3(x, y, 0), 10);
+		if(node != nullptr)
+		node->traversable = false;
+	}
+	
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))

@@ -36,4 +36,6 @@ protected:
 	std::vector<Agent*>	m_agent;
 	StateManager* FSM;
 	Graph* graph;
+	Graph::node* node1;
+	Graph::node* node2;
 };
