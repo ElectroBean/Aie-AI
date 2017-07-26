@@ -13,6 +13,7 @@ class Graph
 public:
 	Graph();
 	~Graph();
+	Graph(int x, int y, float windowHeight);
 	struct node;
 	struct edge
 	{
@@ -35,6 +36,7 @@ public:
 		float fScore;
 		bool visited = false;
 		bool traversable = true;
+		Vector3 size;
 
 		static bool compareGScore(node* a, node* b)
 		{

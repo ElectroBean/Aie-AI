@@ -16,6 +16,43 @@ Graph::~Graph()
 {
 }
 
+Graph::Graph(int x, int y, float windowHeight)
+{
+	for (auto node : nodes)
+	{
+		node->highlighted = false;
+	}
+
+	for (int i = 0; i < x; i++)
+	{
+		for (int j = 0; j < y; j++)
+		{
+			Graph::node* node = new Graph::node();
+
+			node->position = Vector3((15 * (i + 1) - 6), (windowHeight - ((j + 1) * 15) + 6), 0);
+
+			addNode(node);
+		}
+	}
+
+	for (auto a : nodes)
+	{
+
+		for (auto b : nodes)
+		{
+			if (a == b)
+				continue;
+
+			float dist = Vector3::distance(a->position, b->position);
+			if (dist <= 15)
+				connectNodes(a, b, dist);
+			
+			//else break;
+		}
+		a->size = Vector3(5, 5, 0);
+	}
+}
+
 void Graph::addNode(node * node)
 {
 	nodes.push_back(node);
@@ -234,7 +271,7 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 		{
 			if (node->traversable)
 			{
-				spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
+				spritebatch->drawBox(node->position.x, node->position.y, node->size.x, node->size.x);
 				spritebatch->setRenderColour(1, 1, 1, 1);
 
 			}
@@ -242,7 +279,7 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 			{
 				//red
 				spritebatch->setRenderColour(1, 0, 0, 1);
-				spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
+				spritebatch->drawBox(node->position.x, node->position.y, node->size.x, node->size.x);
 				spritebatch->setRenderColour(1, 1, 1, 1);
 			}
 		}
@@ -250,14 +287,14 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 		else if (node->highlighted)
 		{
 			spritebatch->setRenderColour(0, 1, 0, 1);
-			spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
+			spritebatch->drawBox(node->position.x, node->position.y, node->size.x, node->size.x);
 			spritebatch->setRenderColour(1, 1, 1, 1);
 		}
 		//not highlighted but visited
 		else if (!node->highlighted && node->visited)
 		{
 			spritebatch->setRenderColour(1, 0, 1, 1);
-			spritebatch->drawBox(node->position.x, node->position.y, 10, 10);
+			spritebatch->drawBox(node->position.x, node->position.y, node->size.x, node->size.x);
 			spritebatch->setRenderColour(1, 1, 1, 1);
 		}
 

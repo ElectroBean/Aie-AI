@@ -37,34 +37,9 @@ bool Application2D::startup() {
 	FSM->changeState(m_agent[1], new WanderState(m_agent[0], 100.f, 0.01f, 100.0f, 100.0f, m_agent[0]));
 
 
-	graph = new Graph();
 	float winHeight = getWindowHeight();
-	for (int i = 0; i < 37; i++)
-	{
-		for (int j = 0; j < 21; j++)
-		{
-			Graph::node* node = new Graph::node();
-			
-			node->position = Vector3((35 * (i + 1) - 25), (winHeight - ((j + 1) * 35) + 25), 0);
-			
-			graph->addNode(node);
-		}
-	}
-	for (auto a : graph->nodes)
-	{
-
-		for (auto b : graph->nodes)
-		{
-			if (a == b)
-				continue;
-
-			float dist = Vector3::distance(a->position, b->position);
-			if(dist <= 40)
-			graph->connectNodes(a, b, dist);
-
-			//else break;
-		}
-	}
+	float winWidth = getWindowWidth();
+	graph = new Graph(winWidth / 10, winHeight / 10, winHeight);
 	return true;
 }
 
