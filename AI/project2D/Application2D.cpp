@@ -25,21 +25,26 @@ bool Application2D::startup() {
 	m_texture = new aie::Texture("./textures/numbered_grid.tga");
 	m_shipTexture = new aie::Texture("./textures/ship.png");
 
+	float winHeight = getWindowHeight();
+	float winWidth = getWindowWidth();
+	graph = new Graph(37, 21, winHeight);
+	//path = graph->aStarSearch(graph->nodes[20], graph->nodes[210]);
+
 	m_cameraX = 0;
 	m_cameraY = 0;
 	m_agent.push_back(new Agent(Vector3(100, 200, 0), new aie::Texture("./textures/car.png")));
-	//m_agent.push_back(new Agent(Vector3(1280 - 32, 720 - 32, 0)));
 	m_agent.push_back(new Agent(Vector3(1280 / 2, 720 / 2, 0), new aie::Texture("./textures/ship.png")));
+	m_agent.push_back(new Agent(Vector3(500, 500, 0), new aie::Texture("./textures/car.png")));
 
 	FSM = new StateManager();
+	FSM2 = new StateManager();
 	m_agent[0]->AddBehaviours(new FollowMouse());
 	m_agent[1]->AddBehaviours(FSM);
+	m_agent[2]->AddBehaviours(FSM2);
+	
 	FSM->changeState(m_agent[1], new WanderState(m_agent[0], 100.f, 0.01f, 100.0f, 100.0f, m_agent[0]));
+	
 
-
-	float winHeight = getWindowHeight();
-	float winWidth = getWindowWidth();
-	graph = new Graph(winWidth / 10, winHeight / 10, winHeight);
 	return true;
 }
 
@@ -61,10 +66,21 @@ void Application2D::update(float deltaTime) {
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
+	///////////////////////////////
+	//
+	//	update agents
+	//
+	///////////////////////////////
 	for (auto agent : m_agent)
 	{
 		agent->update(deltaTime);
 	}
+
+	///////////////////////////////
+	//
+	//	key inputs
+	//
+	///////////////////////////////
 	if (input->wasMouseButtonPressed(1))
 	{
 		int x = 0; 
@@ -81,7 +97,17 @@ void Application2D::update(float deltaTime) {
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
 	{
-		graph->aStarSearch(node1, node2);
+		for (auto n : graph->nodes)
+		{
+			n->highlighted = false;
+			n->visited = false;
+			for (auto e : n->connections)
+			{
+				e->highlighted = false;
+			}
+		}
+		path = graph->aStarSearch(node1, node2);
+		FSM2->changeState(m_agent[2], new PathFind(m_agent[2], path, 150));
 	}
 	if (input->isKeyDown(aie::INPUT_KEY_LEFT_SHIFT))
 	{
@@ -93,6 +119,8 @@ void Application2D::update(float deltaTime) {
 		node->traversable = false;
 	}
 	
+
+
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))

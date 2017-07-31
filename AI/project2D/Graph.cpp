@@ -29,7 +29,7 @@ Graph::Graph(int x, int y, float windowHeight)
 		{
 			Graph::node* node = new Graph::node();
 
-			node->position = Vector3((15 * (i + 1) - 6), (windowHeight - ((j + 1) * 15) + 6), 0);
+			node->position = Vector3((35 * (i + 1) - 25), (windowHeight - ((j + 1) * 35) + 25), 0);
 
 			addNode(node);
 		}
@@ -44,12 +44,12 @@ Graph::Graph(int x, int y, float windowHeight)
 				continue;
 
 			float dist = Vector3::distance(a->position, b->position);
-			if (dist <= 15)
+			if (dist <= 45)
 				connectNodes(a, b, dist);
 			
 			//else break;
 		}
-		a->size = Vector3(5, 5, 0);
+		a->size = Vector3(10, 10, 0);
 	}
 }
 
@@ -224,16 +224,7 @@ std::vector<Vector3> Graph::aStarSearch(node * startNode, node * endNode)
 	{
 		path.push_back(currentPathNode->position);
 		currentPathNode->highlighted = true;
-		//for all connections in current node
-		for (auto c : currentPathNode->connections)
-		{
-			//check if connections target is parent node
-			if (c->nodeA == currentPathNode->parent || c->nodeB == currentPathNode->parent)
-			{
-				//if true, set the connection to highlighted
-				c->highlighted = true;
-			}
-		}
+		
 		//iterate through
 		currentPathNode = currentPathNode->parent;
 	}
@@ -250,11 +241,26 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 		//for all connections within current node
 		for (auto e : node->connections)
 		{
-			//check if both connections are highlighted
-			if (e->highlighted)
+			if (e->nodeA->highlighted && e->nodeB->highlighted)
 			{
-				//draw the edge as green
-				spritebatch->setRenderColour(0, 1, 0, 1);
+				e->highlighted = true;
+			}
+			if (!e->nodeA->traversable && !e->nodeB->traversable)
+			{
+				e->traversable = false;
+			}
+
+			if (!e->traversable)
+			{
+				//draw red if not traversable
+				spritebatch->setRenderColour(1, 0, 0, 0.5);
+				spritebatch->drawLine(e->nodeA->position.x, e->nodeA->position.y, e->nodeB->position.x, e->nodeB->position.y);
+				spritebatch->setRenderColour(1, 1, 1, 1);
+			}
+			else if(e->highlighted)
+			{
+				//draw the edge as green if its highlighted
+				spritebatch->setRenderColour(0, 1, 0, 0.5);
 				spritebatch->drawLine(e->nodeA->position.x, e->nodeA->position.y, e->nodeB->position.x, e->nodeB->position.y);
 				spritebatch->setRenderColour(1, 1, 1, 1);
 
@@ -263,6 +269,7 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 			{
 				//draw as white
 				spritebatch->drawLine(e->nodeA->position.x, e->nodeA->position.y, e->nodeB->position.x, e->nodeB->position.y);
+
 			}
 		}
 
@@ -271,6 +278,7 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 		{
 			if (node->traversable)
 			{
+				spritebatch->setRenderColour(1, 1, 1, 0.5);
 				spritebatch->drawBox(node->position.x, node->position.y, node->size.x, node->size.x);
 				spritebatch->setRenderColour(1, 1, 1, 1);
 
@@ -278,7 +286,7 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 			else
 			{
 				//red
-				spritebatch->setRenderColour(1, 0, 0, 1);
+				spritebatch->setRenderColour(1, 0, 0, 0.5);
 				spritebatch->drawBox(node->position.x, node->position.y, node->size.x, node->size.x);
 				spritebatch->setRenderColour(1, 1, 1, 1);
 			}
@@ -286,14 +294,14 @@ void Graph::Draw(aie::Renderer2D * spritebatch)
 		//if it's highlighted
 		else if (node->highlighted)
 		{
-			spritebatch->setRenderColour(0, 1, 0, 1);
+			spritebatch->setRenderColour(0, 1, 0, 0.5);
 			spritebatch->drawBox(node->position.x, node->position.y, node->size.x, node->size.x);
 			spritebatch->setRenderColour(1, 1, 1, 1);
 		}
 		//not highlighted but visited
 		else if (!node->highlighted && node->visited)
 		{
-			spritebatch->setRenderColour(1, 0, 1, 1);
+			spritebatch->setRenderColour(1, 0, 1, 0.5);
 			spritebatch->drawBox(node->position.x, node->position.y, node->size.x, node->size.x);
 			spritebatch->setRenderColour(1, 1, 1, 1);
 		}

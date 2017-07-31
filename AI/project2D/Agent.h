@@ -27,6 +27,7 @@ public:
 	void AddBehaviours(IBehaviour* behaviour);
 	bool hasWeapon();
 	float getHealth();
+	void takeDamage(float damage);
 
 	Matrix3 GlobalTransform;
 	Vector3 acceleration;

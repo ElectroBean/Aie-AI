@@ -39,8 +39,8 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 			maxSpeed = distance;*/
 
 		dir = dir * maxSpeed;
-
-		agent->velocity = agent->velocity + dir * deltaTime;
+		agent->velocity = dir;
+		//agent->velocity = agent->velocity + dir * deltaTime;
 
 
 		if (Vector3::distance(nextPosition.position, agent->GlobalTransform.position) < 1.0f)

@@ -28,7 +28,6 @@ void Agent::AddForce(Vector3 a_force)
 
 void Agent::update(float deltaTime)
 {
-	health -= 1;
 	for (auto iter = behaviours.begin(); iter != behaviours.end(); iter++)
 	{
 		(*iter)->Update(deltaTime, this);
@@ -75,5 +74,10 @@ bool Agent::hasWeapon()
 float Agent::getHealth()
 {
 	return health;
+}
+
+void Agent::takeDamage(float damage)
+{
+	health -= damage;
 }
 
