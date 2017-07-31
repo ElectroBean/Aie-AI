@@ -59,8 +59,8 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		wanderCircle.position = Vector3(agent->GlobalTransform.position + (agent->GlobalTransform.position * wanderDistance));
 
-		int xRand = rand() % (50 - -50 + 1) + -50;
-		int yRand = rand() % (50 - -50 + 1) + -50;
+		int xRand = rand() % (100 - -100 + 1) + -100;
+		int yRand = rand() % (100 - -100 + 1) + -100;
 
 		randCircumPoint = Vector3(float(xRand), float(yRand), 0);
 
@@ -71,6 +71,11 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 		std::cout << "position changed" << std::endl;
 		reachedPos = false;
 
+		if (wanderPos.x > 1280 || wanderPos.x < 0
+			|| wanderPos.y > 720 || wanderPos.y < 0)
+		{
+			reachedPos = true;
+		}
 	}
 
 	if (Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position) < 50)
@@ -80,14 +85,14 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 			sm->changeState(agent, new SeekState(target, maxSpeed));
 			std::cout << "seeking" << std::endl;
 			//now seeking
-
+	
 		}
 		else if (agent->getHealth() < 25.0f)
 		{
 			sm->changeState(agent, new FleeState(target, maxSpeed));
 			std::cout << "fleeing" << std::endl;
 			//now fleeing
-
+	
 		}
 	}
 }

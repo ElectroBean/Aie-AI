@@ -43,7 +43,7 @@ void SeekState::update(float deltaTime, Agent * agent, StateManager * sm)
 	if (Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position) < 5.0f)
 	{
 		//change states if the distance between agent and target is above 250 units
-		sm->changeState(agent, new AttackState(target, 1));
+		sm->changeState(agent, new AttackState(target, 2));
 		std::cout << "wandering" << std::endl;
 	}
 }

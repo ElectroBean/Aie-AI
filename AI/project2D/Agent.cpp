@@ -40,13 +40,17 @@ void Agent::update(float deltaTime)
 	acceleration = Vector3(0, 0, 0);
 
 	if (this->GlobalTransform.position.x > 1280)
-		this->GlobalTransform.position.x = 1280;
-	if (this->GlobalTransform.position.x < 0)
 		this->GlobalTransform.position.x = 0;
+
+	if (this->GlobalTransform.position.x < 0)
+		this->GlobalTransform.position.x = 1280;
+
 	if (this->GlobalTransform.position.y > 720)
-		this->GlobalTransform.position.y = 720;
-	if (this->GlobalTransform.position.y < 0)
 		this->GlobalTransform.position.y = 0;
+
+	if (this->GlobalTransform.position.y < 0)
+		this->GlobalTransform.position.y = 720;
+
 
 	if (health <= -100)
 		health = -100;

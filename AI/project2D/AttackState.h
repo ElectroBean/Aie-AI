@@ -1,5 +1,7 @@
 #pragma once
 #include "State.h"
+#include "WanderState.h"
+#include "StateManager.h"
 class AttackState :
 	public State
 {
