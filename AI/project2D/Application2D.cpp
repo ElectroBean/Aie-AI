@@ -41,9 +41,9 @@ bool Application2D::startup() {
 	m_agent[0]->AddBehaviours(new FollowMouse());
 	m_agent[1]->AddBehaviours(FSM);
 	m_agent[2]->AddBehaviours(FSM2);
-	
+
 	FSM->changeState(m_agent[1], new WanderState(m_agent[0], 100.f, 0.01f, 100.0f, 100.0f, m_agent[0]));
-	
+
 
 	return true;
 }
@@ -81,22 +81,13 @@ void Application2D::update(float deltaTime) {
 	//	key inputs
 	//
 	///////////////////////////////
-	if (input->wasMouseButtonPressed(1))
-	{
-		int x = 0; 
-		int y = 0;
-		input->getMouseXY(&x, &y);
-		node1 = graph->findNode(Vector3(x, y, 0), 10);
-	}
 	if (input->wasMouseButtonPressed(0))
 	{
 		int x = 0;
 		int y = 0;
 		input->getMouseXY(&x, &y);
-		node2 = graph->findNode(Vector3(x, y, 0), 10);
-	}
-	if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
-	{
+		node1 = graph->findNode(m_agent[2]->GlobalTransform.position, 25);
+		node2 = graph->findNode(Vector3(x, y, 0), 25);
 		for (auto n : graph->nodes)
 		{
 			n->highlighted = false;
@@ -106,19 +97,40 @@ void Application2D::update(float deltaTime) {
 				e->highlighted = false;
 			}
 		}
-		path = graph->aStarSearch(node1, node2);
+		path = graph->aStarSearch(node2, node1);
 		FSM2->changeState(m_agent[2], new PathFind(m_agent[2], path, 150));
 	}
+	//if (input->wasMouseButtonPressed(0))
+	//{
+	//	int x = 0;
+	//	int y = 0;
+	//	input->getMouseXY(&x, &y);
+	//	node2 = graph->findNode(Vector3(x, y, 0), 10);
+	//}
+	//if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
+	//{
+	//	for (auto n : graph->nodes)
+	//	{
+	//		n->highlighted = false;
+	//		n->visited = false;
+	//		for (auto e : n->connections)
+	//		{
+	//			e->highlighted = false;
+	//		}
+	//	}
+	//	path = graph->aStarSearch(node1, node2);
+	//	FSM2->changeState(m_agent[2], new PathFind(m_agent[2], path, 150));
+	//}
 	if (input->isKeyDown(aie::INPUT_KEY_LEFT_SHIFT))
 	{
 		int x = 0;
 		int y = 0;
 		input->getMouseXY(&x, &y);
 		Graph::node* node = graph->findNode(Vector3(x, y, 0), 10);
-		if(node != nullptr)
-		node->traversable = false;
+		if (node != nullptr)
+			node->traversable = false;
 	}
-	
+
 
 
 

@@ -10,6 +10,8 @@ PathFind::PathFind(Agent* agent, std::vector<Vector3> path, float maxSpeed)
 	this->maxSpeedConst = maxSpeed;
 	previousTarget = agent->GlobalTransform;
 	nodes = path;
+	reachedPos = false;
+	nextPosition.position = nodes[1];
 	//this->target = target;
 }
 
@@ -32,20 +34,8 @@ void PathFind::update(float deltaTime, Agent * agent, StateManager * sm)
 	{
 		Vector3 dir = nextPosition.position - agent->GlobalTransform.position;
 		dir.normalise();
-
-		float distance = Vector3::distance(agent->GlobalTransform.position, nextPosition.position);
-		/*if (maxSpeed > distance)
-		maxSpeed = distance;*/
-		float dist = Vector3::distance(nextPosition.position, agent->GlobalTransform.position);
-		//if (maxSpeed > dist)
-			//maxSpeed = dist;
-
 		dir = dir * maxSpeed;
-
 		agent->velocity = dir;
-
-		//agent->velocity = agent->velocity + dir * deltaTime;
-
 
 		if (Vector3::distance(nextPosition.position, agent->GlobalTransform.position) < 10.0f)
 		{

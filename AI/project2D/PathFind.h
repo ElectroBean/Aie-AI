@@ -21,7 +21,7 @@ public:
 	Matrix3 wanderCircle;
 	Matrix3 nextPosition;
 	Vector3 randCircumPoint;
-	int i = 0;
+	int i = 1;
 
 	std::vector<Vector3> nodes;
 };

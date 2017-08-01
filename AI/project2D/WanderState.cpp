@@ -10,6 +10,7 @@ WanderState::WanderState(Agent* agent, float wanderRadius, float wanderDistance,
 	this->maxSpeed = maxSpeed;
 	previousTarget = agent->GlobalTransform;
 	this->target = target;
+	reachedPos = true;
 }
 
 
@@ -78,7 +79,7 @@ void WanderState::update(float deltaTime, Agent * agent, StateManager * sm)
 		}
 	}
 
-	if (Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position) < 50)
+	if (Vector3::distance(agent->GlobalTransform.position, target->GlobalTransform.position) < 100)
 	{
 		if (agent->getHealth() >= 25.0f)
 		{
